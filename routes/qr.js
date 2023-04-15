@@ -5,9 +5,10 @@ const express = require('express')
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const QR = require("qrcode");
+const { requireSignIn } = require("../common-middleware");
 var ObjectId = require('mongoose').Types.ObjectId;
 
-router.post("/generate", async (req, res) => {
+router.post("/generate", requireSignIn, async (req, res) => {
     try {
         console.log('body',req.body)
         const { userId } = req.body;

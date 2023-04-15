@@ -12,7 +12,6 @@ router.post("/register", async (req, res) => {
   
     try {
       // Get user input
-      console.log('req.body',req.body)
       const { name, email, password, type } = req.body;
   
       // Validate user input
@@ -40,16 +39,17 @@ router.post("/register", async (req, res) => {
       });
   
       // Create token
+      
       const token = jwt.sign(
         { user_id: user._id, email },
-        process.env.TOKEN_KEY,
+        process.env.TOKEN_SECRET,
         {
-          expiresIn: "2h",
+          expiresIn: "8h",
         }
       );
   
       // return new user
-      res.status(201).json({ token });
+      res.header("auth-token", token).send({ token });
     } catch (err) {
       console.log(err);
     }
@@ -80,7 +80,7 @@ router.post("/login", async (req, res) => {
         // Create token
         const token = jwt.sign(
           { user_id: user._id, email },
-          process.env.TOKEN_KEY,
+          process.env.TOKEN_SECRET,
           {
             expiresIn: "2h",
           }

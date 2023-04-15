@@ -9,6 +9,7 @@ const qrcode = require("qrcode");
 const sseRoute = require("./routes/sse");
 
 const cookieParser = require('cookie-parser');
+const { requireSignIn } = require("./common-middleware");
 
 const app = express();
 
@@ -59,7 +60,7 @@ app.use(function (req, res, next) {
   next();
 })
 app.use(sseRoute);
-app.use('/auth',require("./routes/auth"));
+app.use('/auth', require("./routes/auth"));
 app.use('/table',require("./routes/table"));
 app.use('/item',require("./routes/item"));
 app.use('/offer',require("./routes/offer"));

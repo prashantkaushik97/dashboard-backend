@@ -10,7 +10,8 @@
 const Table = require("../model/table");
 const Order = require("../model/order");
 const Seq = require("../model/seq");
-const express = require('express')
+const express = require('express');
+const { requireSignIn } = require("../common-middleware");
 const router = express.Router();
 // const bcrypt = require('bcrypt')
 // const jwt = require("jsonwebtoken");
@@ -30,7 +31,7 @@ async function getValueForNextSequence(sequenceOfName) {
 }
 
 
-router.post("/createTable", async (req, res) => {
+router.post("/createTable",requireSignIn, async (req, res) => {
     try {
         let { tableNumber, capacity, notes } = req.body
         let data = await Table.create({ tableNumber: tableNumber, capacity:capacity, notes:notes })

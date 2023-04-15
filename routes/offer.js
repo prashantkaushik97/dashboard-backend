@@ -1,5 +1,6 @@
 const Offer = require("../model/offer");
-const express = require('express')
+const express = require('express');
+const { requireSignIn } = require("../common-middleware");
 const router = express.Router();
 
 router.get("/offerid/:id", async (req, res) => {
@@ -15,7 +16,7 @@ router.get("/offerid/:id", async (req, res) => {
     }
 });
 
-router.post("/createOffer", async (req, res) => {
+router.post("/createOffer", requireSignIn, async (req, res) => {
     try {
         let { title, description, discount, endDate, startDate, minimum_amount, itemType, maximumDiscount, customerType} = req.body
         let { image } = req.files;

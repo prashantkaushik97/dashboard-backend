@@ -6,26 +6,9 @@ const express = require('express')
 const router = express.Router();
 const sse = require("../sse");
 const Item = require("../model/item");
+const { requireSignIn, reqUserEmail } = require("../common-middleware");
 
-// const bcrypt = require('bcrypt')
-// const jwt = require("jsonwebtoken");
-
-// async function getValueForNextSequence(sequenceOfName) {
-
-//     console.log('sequenceOfName', sequenceOfName)
-//     let filter = { seq_name: sequenceOfName }
-//     let updates = { $inc: { seq_val: 1 } }
-//     var sequenceDoc = await Seq.findOneAndUpdate(
-//         filter,
-//         updates,
-//         { returnOriginal: false }
-//     );
-//     console.log('sequenceDoc', sequenceDoc)
-//     return sequenceDoc.seq_val;
-// }
-
-
-router.get("/orderid/:id", async (req, res) => {
+router.get("/orderid/:id",requireSignIn, async (req, res) => {
     const query = { orderId: req.params.id };
 
     try {
@@ -48,7 +31,7 @@ router.get("/email-active/:email", async (req, res) => {
         res.status(500).json({ message: "Server Error" });
     }
 });
-router.post("/createOrder", async (req, res) => {
+router.post("/createOrder", reqUserEmail, async (req, res) => {
     try {
         let { orderItems, email, orderType, tableNumber } = req.body
 
@@ -106,7 +89,7 @@ router.post("/createOrder", async (req, res) => {
     }
 });
 
-router.put('/singlePaid', async (req, res) => {
+router.put('/singlePaid', requireSignIn, async (req, res) => {
     try {
         const { email, paymentStatus } = req.body;
         const order = await Order.updateMany(
@@ -130,7 +113,7 @@ router.put('/singlePaid', async (req, res) => {
         return res.status(500).json({ message: 'Server error' });
     }
 });
-router.put("/updateOrderStatusByEmail", async (req, res) => {
+router.put("/updateOrderStatusByEmail", requireSignIn, async (req, res) => {
     try {
         const { email, orderStatus } = req.body;
 
@@ -155,7 +138,7 @@ router.put("/updateOrderStatusByEmail", async (req, res) => {
     }
 });
 
-router.put('/orderid/:orderId', async (req, res) => {
+router.put('/orderid/:orderId',requireSignIn, async (req, res) => {
     try {
         const updatedOrder = await Order.findOneAndUpdate(
             { orderId: req.params.orderId },
@@ -171,7 +154,7 @@ router.put('/orderid/:orderId', async (req, res) => {
         res.status(500).send({ message: 'Server error' });
     }
 });
-router.get("/allOrders", async (req, res) => {
+router.get("/allOrders", requireSignIn, async (req, res) => {
     try {
         let data = await Order.find({})
         res.status(200).json(data);
@@ -179,7 +162,7 @@ router.get("/allOrders", async (req, res) => {
         res.status(500).json("Server Error!")
     }
 });
-router.get('/active', async (req, res) => {
+router.get('/active', requireSignIn, async (req, res) => {
     try {
         const orders = await Order.find({ orderStatus: { $ne: "complete" } });
         res.json(orders);
@@ -188,13 +171,9 @@ router.get('/active', async (req, res) => {
     }
 });
 
-router.get('/total-order-amount', async (req, res) => {
+router.get('/total-order-amount', requireSignIn, async (req, res) => {
     try {
         const orders = await Order.find({ paymentStatus: { $ne: 'complete' } });
-        // total=0
-        // orders?.orderItems?.forEach(item => {
-        //     total=total+orderAmount
-        // });
         const totalAmount = orders.reduce((total, order) => {
             return total + order.orderAmount;
         }, 0);

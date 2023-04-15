@@ -5,6 +5,7 @@ const Seq = require("../model/seq");
 const express = require('express')
 const router = express.Router();
 const sse = require("../sse");
+const { requireSignIn } = require("../common-middleware");
 
 
 router.get("/itemId/:id", async (req, res) => {
@@ -20,7 +21,7 @@ router.get("/itemId/:id", async (req, res) => {
     }
 });
 
-router.post("/createItem", async (req, res) => {
+router.post("/createItem", requireSignIn, async (req, res) => {
     try {
         let { itemName, price, availability, description, category, subCategory, offer, stock, prepTime, tags, options, nutrition, itemType, productionCost, tax } = req.body
 
@@ -44,7 +45,7 @@ router.get("/allItems", async (req, res) => {
         res.status(500).json("Server Error!")
     }
 });
-router.put("/updateItem", async (req, res) => {
+router.put("/updateItem", requireSignIn, async (req, res) => {
     const { _id,itemName, price, availability, description, category, subCategory, offer, stock, prepTime, tags, options, nutrition, itemType, productionCost, tax } = req.body;
   
     try {
