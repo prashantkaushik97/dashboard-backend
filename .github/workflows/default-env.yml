@@ -5,7 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Secrets
-         
+        run: |
+            echo "setting env vars"
         env: 
             MONGO_URI: ${{ secrets.MONGO_URI }}
             PORT: ${{ secrets.PORT }}
