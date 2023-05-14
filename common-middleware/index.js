@@ -6,7 +6,7 @@ exports.requireSignIn = (req, res, next) => {
   }
   console.log(req.headers)
   const token = req.headers.authorization?.split(' ')[1];
-  const user = jwt.verify(token, process.env.TOKEN_SECRET);
+  const user = jwt.verify(token, "gdsfdshfdshfudshufhufhewwufhqiufh23u423iru34ori34j34ujro34jfo_9ro34rq");
   req.user = user;
   next();
 };
