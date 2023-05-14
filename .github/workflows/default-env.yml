@@ -2,11 +2,10 @@ name: Secrets
 on: push
 jobs:
   secret-env-vars:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Secrets
-        run: |
-            echo ${{ secrets.MONGO_URI }}  
+         
         env: 
             MONGO_URI: ${{ secrets.MONGO_URI }}
             PORT: ${{ secrets.PORT }}
