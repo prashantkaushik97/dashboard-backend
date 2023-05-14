@@ -69,5 +69,5 @@ app.use('/qr',require("./routes/qr"));
 app.use('/order',require("./routes/order"));
 app.use('/seq',require("./routes/order"));
 app.listen(process.env.PORT, () =>
-  console.log(`Example app listening on port`, process.env.PORT),
+  console.log(`Example app listening on port`, 4000),
 );
