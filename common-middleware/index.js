@@ -1,12 +1,11 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
-const { requireSignIn, userMiddleware } = require("../common-middleware");
 exports.requireSignIn = (req, res, next) => {
   if (req.headers.autherization === null) {
     return res.status(400).json({ message: "Authorization required" });
   }
   console.log(req.headers)
-  const token = req.headers.authorization.split(' ')[1];
+  const token = req.headers?.authorization?.split(' ')[1];
   const user = jwt.verify(token, process.env.TOKEN_SECRET);
   req.user = user;
   next();

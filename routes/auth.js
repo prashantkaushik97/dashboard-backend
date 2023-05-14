@@ -55,12 +55,7 @@ router.post("/register", async (req, res) => {
     }
     // Our register logic ends here
   });
-  
-  // ...
-  ;
 
-// Login
-// ...
 
 router.post("/login", async (req, res) => {
     // Our login logic starts here
