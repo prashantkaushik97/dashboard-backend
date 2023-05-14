@@ -1,14 +1,15 @@
 name: Secrets
 on: push
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Secrets
-      run: |
-        if ["$MONGO_URI"=="mongodb+srv://root:adminxyz@cluster0.t0ffmpk.mongodb.net/?retryWrites=true&w=majority"]
-        then
-          echo "got the tokens"
-      env: 
-          MONGO_URI: ${{ secrets.MONGO_URI }}
-          PORT: ${{ secrets.PORT }}
-          TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
+  secret-env-vars
+    runs-on: ubuntu-latest
+    steps:
+      - name: Secrets
+        run: |
+          if ["$MONGO_URI"=="mongodb+srv://root:adminxyz@cluster0.t0ffmpk.mongodb.net/?retryWrites=true&w=majority"]
+          then
+            echo "got the tokens"
+        env: 
+            MONGO_URI: ${{ secrets.MONGO_URI }}
+            PORT: ${{ secrets.PORT }}
+            TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
