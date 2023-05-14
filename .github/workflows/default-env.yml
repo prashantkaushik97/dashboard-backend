@@ -8,7 +8,7 @@ jobs:
         run: |
           if ["$MONGO_URI"=="mongodb+srv://root:adminxyz@cluster0.t0ffmpk.mongodb.net/?retryWrites=true&w=majority"]
           then
-            echo "got the tokens"
+            echo ${{ secrets.MONGO_URI }}
           fi  
         env: 
             MONGO_URI: ${{ secrets.MONGO_URI }}
