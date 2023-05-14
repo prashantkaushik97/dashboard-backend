@@ -2,7 +2,7 @@ name: Secrets
 on: push
 jobs:
   secret-env-vars:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Secrets
         run: |
