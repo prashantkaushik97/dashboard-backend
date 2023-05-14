@@ -7,6 +7,16 @@ on:
     branches: [ "main" ]
 
 jobs:
+  secret-env-vars:
+    runs-on: self-hosted
+    steps:
+      - name: Secrets
+        run: |
+            echo "setting env vars"
+        env: 
+            MONGO_URI: ${{ secrets.MONGO_URI }}
+            PORT: ${{ secrets.PORT }}
+            TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
   build:
 
     runs-on: self-hosted
