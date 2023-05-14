@@ -56,7 +56,7 @@ app.post('/post',(req,res)=>{
     res.json({success:true})
 })
 app.use(function (req, res, next) {
-  res.flush = function () { /* Do nothing */ }
+  res.flush = function () { /* Donothing */ }
   next();
 })
 app.use(sseRoute);
