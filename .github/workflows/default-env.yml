@@ -1,7 +1,7 @@
 name: Secrets
 on: push
 jobs:
-  secret-env-vars
+  secret-env-vars:
     runs-on: ubuntu-latest
     steps:
       - name: Secrets
